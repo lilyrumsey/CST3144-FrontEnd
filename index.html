@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson Info App</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+<div id="App">
+    <h1>Lesson  Information</h1>
+    <p><strong>Subject:</strong> {{ lesson.subject }}</p>
+    <p><strong>Location:</strong> {{ lesson.location }}</p>
+    <p><strong>Price:</strong> ${{ lesson.price }}</p>
+
+</div>
+
+<script>
+new Vue({
+    el: '#App',
+    data: {
+        lesson: {
+            subject: 'Mathematics',
+            location: 'Room 101',
+            price: 50
+        }
+    }
+});
+
+</script>
+
+    </body>
+    </html>
