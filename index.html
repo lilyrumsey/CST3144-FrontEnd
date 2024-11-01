@@ -45,6 +45,20 @@
                     {{ getLesson(lessonId).subject }} - {{ getLesson(lessonId).location }}
                 </li>
             </ul>
+
+            <h2>Checkout</h2>
+            <form @submit.prevent="submitOrder">
+                <label for="name">Name:</label>
+                <input type="text" id="name" v-model="name" placeholder="Enter your name" @input="validateName" required>
+
+                <label for="phone">Phone No:</label>
+                <input type="text" id="phone" v-model="phone" placeholder="Enter your phone number" @input="validatePhone" required>
+
+                <button type="submit" :disabled="!isCheckoutEnabled">Checkout</button>
+            </form>
+            <p v-if="orderSubmitted" style="color: green; font-weight: bold; margin-top: 10px;">
+                Thank you! Your ordered lessons have been allocated to you, and you will be given class times soon.
+            </p>
         </div>
     </main>
 
@@ -149,17 +163,38 @@ let webstore = new Vue({
             }
         ],
         cart: [],
-    
+        name: '',
+        phone: '',
+        orderSubmitted: false,
     },
     methods: {
         showCheckout: function() {
             this.showLesson = !this.showLesson;
+            this.orderSubmitted = false;
         },
         addItemToTheCart: function(lessonId) {
             this.cart.push(lessonId);
         },
         getLesson: function(lessonId) {
             return this.lessons.find(lesson => lesson.id === lessonId);
+        },
+        validateName: function() {
+            const namePattern = /^[A-Za-z\s]+$/;
+            if (!namePattern.test(this.name)) {
+                this.name = this.name.replace(/[^A-Za-z\s]/g, '');
+            }
+        }, 
+        validatePhone: function() {
+            const phonePattern = /^[0-9]*$/;
+            if (!phonePattern.test(this.phone)) {
+                this.phone = this.phone.replace(/[^0-9]/g, '');
+            }
+        },
+        submitOrder: function () {
+            this.orderSubmitted = true;
+            this.cart = [];
+            this.name = ''; 
+            this.phone = ''; 
         }
     },
     computed: {
@@ -172,6 +207,9 @@ let webstore = new Vue({
                 let lesson = this.lessons.find(lesson => lesson.id === lessonId);
                 return lesson && lesson.availableInventory > lessonInCart;
             };
+        },
+        isCheckoutEnabled: function() {
+            return /^[A-Za-z\s]+$/.test(this.name) && /^[0-9]+$/.test(this.phone) && this.phone.length > 0;
         }
     }
 });
@@ -179,3 +217,4 @@ let webstore = new Vue({
 
 </body>
 </html>
+
