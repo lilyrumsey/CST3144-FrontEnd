@@ -3,31 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lesson Info App</title>
-<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+<title>Lesson App</title>
 </head>
 <body>
-<div id="App">
-    <h1>Lesson  Information</h1>
-    <p><strong>Subject:</strong> {{ lesson.subject }}</p>
-    <p><strong>Location:</strong> {{ lesson.location }}</p>
-    <p><strong>Price:</strong> ${{ lesson.price }}</p>
+
+<div id="app">
+
+    <header>
+    <h1 v-text="sitename"></h1>
+
+    <button v-on:click="showCheckout"> 
+        {{ itemsInTheCart }}
+        🛒
+        Checkout
+    </button>
+    </header>
+
+    <main>
+    <div v-if="showLesson">
+    <figure>
+    <img v-bind:src="lesson.image" alt="Maths Icon" width="100" height="100">
+    </figure>
+    <h1 v-text="lesson.subject"></h1>
+    <p v-text="lesson.location"></p>
+    <p>Price: {{lesson.price}}</p>
+    <p>Spaces: {{lesson.spaces}}</p>
+
+    <input type="button" value="Add to the Cart ➕" v-on:click="addItemToTheCart" v-if="canAddToTheCart"/>
+    <div v-else>
+    <button disabled>Add to the Cart</button>
+    You have added all available lessons for this subject to your cart
+    </div>
+    </div>
+    <div v-else>
+    <h1>Your Cart</h1>
+    </div>
+    </figure>
+    </main>
 
 </div>
 
 <script>
-new Vue({
-    el: '#App',
+let webstore = new Vue({
+    el: '#app',
     data: {
+        sitename: "After School Classes Available 🏫🎒✏️",
+        showLesson: true,
         lesson: {
+            id: 1001,
             subject: 'Mathematics',
-            location: 'Room 101',
-            price: 50
+            location: 'Room: 101',
+            price: 50,
+            spaces: 5,
+            image: "images/mathsicon.png",
+            availableInventory: 5
+        },
+        cart: [],
+    
+    },
+    methods: {
+        showCheckout: function() {
+        if (this.showLesson) {this.showLesson = false}
+        else {this.showLesson = true}
+        },
+        addItemToTheCart: function() {
+            this.cart.push(this.lesson.id);
+        }
+    },
+    computed: {
+        itemsInTheCart: function() {
+            return this.cart.length || "";
+        },
+        canAddToTheCart: function() {
+            return this.lesson.availableInventory > this.itemsInTheCart;
         }
     }
 });
 
 </script>
-
-    </body>
-    </html>
+</body>
+</html>
