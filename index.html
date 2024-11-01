@@ -10,12 +10,12 @@
 
 <div id="app">
 
-    <header v-if="showLesson">
+    <header>
         <h1 v-text="sitename"></h1>
-        <button v-on:click="showCheckout"> 
-            {{ itemsInTheCart }}
+        <button v-on:click="showCheckout" :disabled="cart.length === 0"> 
+            {{ showLesson ? 'Checkout' : 'Back to Lessons' }}
             🛒
-            Checkout
+            {{ itemsInTheCart }}
         </button>
     </header>
 
