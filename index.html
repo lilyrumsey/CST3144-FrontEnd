@@ -30,7 +30,7 @@
                 <p>Price: {{lesson.price}}</p>
                 <p>Spaces: {{lesson.spaces}}</p>
 
-                <input type="button" value="Add to the Cart ➕" v-on:click="addItemToTheCart(lesson.id)" v-if="canAddToTheCart(lesson.id)"/>
+                <input type="button" value="Add to the Cart" v-on:click="addItemToTheCart(lesson.id)" v-if="canAddToTheCart(lesson.id)"/>
                 <div v-else>
                     <button disabled>Add to the Cart</button>
                     You have added all available lessons for this subject to your cart
@@ -68,11 +68,11 @@ let webstore = new Vue({
             },
             {
                 id: 1002,
-                subject: 'Science',
+                subject: 'Physics',
                 location: 'Room: 102',
                 price: 60,
                 spaces: 5,
-                image: "images/scienceicon.png",
+                image: "images/physicsicon.png",
                 availableInventory: 5
             },
             {
@@ -100,6 +100,51 @@ let webstore = new Vue({
                 price: 40,
                 spaces: 5,
                 image: "images/iticon.png",
+                availableInventory: 5
+            },
+            {
+                id: 1006,
+                subject: 'German',
+                location: 'Room: 204',
+                price: 40,
+                spaces: 5,
+                image: "images/germanicon.png",
+                availableInventory: 5
+            },
+            {
+                id: 1007,
+                subject: 'Chemistry',
+                location: 'Room: 102',
+                price: 60,
+                spaces: 5,
+                image: "images/chemistryicon.png",
+                availableInventory: 5
+            },
+            {
+                id: 1008,
+                subject: 'Sport',
+                location: 'Room: Sports Hall',
+                price: 40,
+                spaces: 5,
+                image: "images/sporticon.png",
+                availableInventory: 5
+            },
+            {
+                id: 1009,
+                subject: 'French',
+                location: 'Room: 246',
+                price: 45,
+                spaces: 5,
+                image: "images/frenchicon.png",
+                availableInventory: 5
+            },
+            {
+                id: 1010,
+                subject: 'Religious Studies',
+                location: 'Room: 362',
+                price: 60,
+                spaces: 5,
+                image: "images/reicon.png",
                 availableInventory: 5
             }
         ],
