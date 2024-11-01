@@ -194,8 +194,13 @@ let webstore = new Vue({
             this.orderSubmitted = false;
         },
         addItemToTheCart: function(lessonId) {
-            this.cart.push(lessonId);
-        },
+    let lesson = this.lessons.find(lesson => lesson.id === lessonId);
+    if (lesson && lesson.availableInventory > 0) {
+        this.cart.push(lessonId);
+        lesson.availableInventory -= 1; // Decrease available inventory by 1
+        lesson.spaces = lesson.availableInventory; // Update spaces to match the remaining inventory
+    }
+},
         getLesson: function(lessonId) {
             return this.lessons.find(lesson => lesson.id === lessonId);
         },
@@ -223,12 +228,12 @@ let webstore = new Vue({
             return this.cart.length || "";
         },
         canAddToTheCart: function() {
-            return (lessonId) => {
-                let lessonInCart = this.cart.filter(id => id === lessonId).length;
-                let lesson = this.lessons.find(lesson => lesson.id === lessonId);
-                return lesson && lesson.availableInventory > lessonInCart;
-            };
-        },
+    return (lessonId) => {
+        let lesson = this.lessons.find(lesson => lesson.id === lessonId);
+        return lesson && lesson.availableInventory > 0;
+    };
+},
+
         isCheckoutEnabled: function() {
             return /^[A-Za-z\s]+$/.test(this.name) && /^[0-9]+$/.test(this.phone) && this.phone.length > 0;
         },
